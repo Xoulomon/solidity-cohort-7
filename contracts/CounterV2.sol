@@ -1,66 +1,55 @@
-// // SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 
-// pragma solidity ^0.8.0;
+pragma solidity ^0.8.0;
 
-// interface ICounter{
-//     function setCount(uint256 _count) external;
+interface ICounterV2{
+    function setCount(uint256 _count) external;
 
-//     function getCount() external  view returns(uint256);
+    function getCount() external  view returns(uint256);
 
-//     function increaseCountByOne() external;
-// }
+    function increaseCountByOne() external;
 
-// contract Counter is ICounter {
-//     uint256 public count;
-//     address owner;
+    function resetCount() external;
 
-//     constructor(){
-//         owner = msg.sender;
-//     }
+    function decreaseCountByOne() external; 
+}
 
-//     function setCount(uint256 _count) public {
-//         require(_count > 0, "Count must be greater than 0");
-//         require(msg.sender == owner, "You are unauthorised");
-//         count = _count;
-//     }
+contract CounterV2 is ICounterV2 {
+    uint256 public count = 0;
+    address owner;
 
-//     function getCount() public view returns(uint256) {
-// contract Counter is ICounter {
-//     uint256 public count;
+    constructor(){
+        owner = msg.sender;
+    }
 
-//     function set
-//         return count;
-//     }
+    function setCount(uint256 _count) public {
+        require(_count > 0, "Count must be greater than 0");
+        require(msg.sender == owner, "You are unauthorised");
+        count = _count;
+    }
 
-//     function increaseCountByOne() public {
-//         require(_count > 0, "Count must be greater than 0");
-//         require(msg.sender == owner, "You are unauthorised");
-//         count+=1;
-//     }
-// }
+    function getCount() public view returns(uint256) {
+        return count;
+    }
 
-// contract F {
-//     // Initializing interface IC
-//    ICounter public _ic;
-//     // Initializing the contract address 
-//    address public contractCAddress;
+    function getOwner() public view returns(address) {
+        return owner;
+    }
 
-//    constructor(address _contractCAddress) {
-//     // Set the contract address to the state variable contract address
-//     contractCAddress = _contractCAddress;
-//     // Passing the contract address into interface using the address instance of another contract
-//     _ic = ICounter(_contractCAddress);
-//    }
+    function increaseCountByOne() public {
+        require(msg.sender == owner, "You are unauthorised");
+        count+=1;
+    }
 
-//     function setCount(uint256 _count) public {
-//         _ic.setCount(_count);
-//     }
+    function resetCount() public {
+        require(count != 0,"Cannot reset value , It's already at default");
+        require(msg.sender == owner, "You are unauthorised");
+        count = 0;
+    }
 
-//     function getCount() public view returns(uint256) {
-//         return _ic.getCount();
-//     }
+    function decreaseCountByOne() public {
+        require(msg.sender == owner, "You are unauthorised");
+        count-=1;
+    }
+}
 
-//     function increaseCountByOne() public {
-//         return _ic.increaseCountByOne();
-//     }
-// }
