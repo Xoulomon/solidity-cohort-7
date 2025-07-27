@@ -15,7 +15,7 @@ interface ICounterV2{
 }
 
 contract CounterV2 is ICounterV2 {
-    uint256 public count = 0;
+    uint256 public count;
     address owner;
 
     constructor(){
@@ -44,7 +44,7 @@ contract CounterV2 is ICounterV2 {
     function resetCount() public {
         require(count != 0,"Cannot reset value , It's already at default");
         require(msg.sender == owner, "You are unauthorised");
-        count = 0;
+        delete count;
     }
 
     function decreaseCountByOne() public {
