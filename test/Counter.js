@@ -75,23 +75,28 @@ describe("Counter Test Suite", () => {
                 const counter = await loadFixture(deployCounter); //extract deployed contract instance
                 await counter.setCount(100);
 
-                let count1 = await counter.getCount();
-                expect(count1).to.eq(100);
+                let count = await counter.getCount();
 
-                await counter.increaseCountByOne();
+                // for (let i = 0; i < 5 ; i++) {
+                    
+                //     await counter.increaseCountByOne();
+
+                //     let count2 = await counter.getCount();
+                //     expect(count2).to.eq(BigInt(count) + 1n); 
+                //     count++;         
+                    
+                // }
+
+                 for (let i = 0; i < 12 ; i++) {
+                    
+                    await counter.increaseCountByOne();
+                    count++;         
+                    
+                }
 
                 let count2 = await counter.getCount();
-                expect(count2).to.eq(101);
-
-                await counter.increaseCountByOne();
-
-                let count3 = await counter.getCount();
-                expect(count3).to.eq(102);
-
-                await counter.increaseCountByOne();
-
-                let count4 = await counter.getCount();
-                expect(count4).to.eq(103);
+                    expect(count2).to.eq(count); 
+                
             })
         })
     })
